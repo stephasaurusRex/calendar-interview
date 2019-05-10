@@ -25,7 +25,7 @@ yarn db:seed
 
 Then run the server in a separate tab:
 ```
-yarn json-server --watch src/db.json --port 3001
+yarn json-server --watch db/db.json --port 3001
 ```
 
 The server will start on port 3001.
