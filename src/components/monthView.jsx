@@ -1,6 +1,8 @@
 import React from "react";
+import { connect } from 'react-redux'
 import { number, object } from "prop-types";
 import moment from "moment";
+import fetchEvents from "../actions/eventActions";
 
 import chunkArray from "../helpers/chunkArray";
 import DateCell from "./dateCell";
@@ -9,17 +11,22 @@ import { monthViewComponent, monthViewHeader, gridWrapper, headerItem, weekRow }
 
 const DAYS_OF_WEEK = ["sun", "mon", "tues", "wed", "thurs", "fri", "sat"];
 
-export default class MonthView extends React.Component {
+class MonthView extends React.Component {
   static propTypes = {
     momentizedDate: object.isRequired, // TODO: shape
     year: number.isRequired,
     month: number.isRequired,
   };
 
+  componentDidMount() {
+    this.props.dispatch(fetchEvents()).then((events) => {
+      this.setState( { events } );
+    });
+  }
+
   render() {
     const dates = this.getDates();
     const weeks = chunkArray(dates, 7);
-
     return (
       <div className={monthViewComponent}>
         <div className={monthViewHeader}>{DAYS_OF_WEEK.map(this.renderHeaderItem)}</div>
@@ -71,3 +78,5 @@ export default class MonthView extends React.Component {
     return moment(this.props.momentizedDate);
   }
 }
+
+export default connect()(MonthView);

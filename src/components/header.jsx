@@ -4,7 +4,7 @@ import moment from "moment";
 
 import Icon from "./icon";
 
-import { headerComponent, changeDateButton, todayButton, panelToggleButton } from "../styles/header.module.css";
+import { headerComponent, changeDateButton, todayButton, panelToggleButton, monthTitle } from "../styles/header.module.css";
 
 export default class Header extends React.Component {
   static propTypes = {
@@ -35,7 +35,7 @@ export default class Header extends React.Component {
           <button className={changeDateButton} onClick={this.handleChangeMonthCurry(1)}>
             <Icon name="angle-right" />
           </button>
-          {this.props.momentizedDate.format("MMMM YYYY")}
+          <span className={monthTitle}>{this.props.momentizedDate.format("MMMM YYYY")}</span>
         </div>
         <button className={panelToggleButton} onClick={this.props.onTogglePanel}>
           {this.props.panelOpen && <Icon name="caret-square-right" solid={false} />}
