@@ -44,3 +44,7 @@
 .panelToggleButton:hover {
   color: #777;
 }
+
+.monthTitle {
+  cursor: default;
+}
