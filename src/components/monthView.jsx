@@ -1,8 +1,7 @@
 import React from "react";
 import { connect } from 'react-redux'
-import { number, object } from "prop-types";
+import { number, object, func, array, bool } from "prop-types";
 import moment from "moment";
-import fetchEvents from "../actions/eventActions";
 
 import chunkArray from "../helpers/chunkArray";
 import DateCell from "./dateCell";
@@ -16,12 +15,16 @@ class MonthView extends React.Component {
     momentizedDate: object.isRequired, // TODO: shape
     year: number.isRequired,
     month: number.isRequired,
+    fetchEvents: func.isRequired,
+    events: array,
+    onTogglePanel: func.isRequired,
+    panelOpen: bool.isRequired,
+    onUpdatePanelEvent: func.isRequired,
+    fetchUsers: func.isRequired,
   };
 
   componentDidMount() {
-    this.props.dispatch(fetchEvents()).then((events) => {
-      this.setState( { events } );
-    });
+    this.props.fetchEvents();
   }
 
   render() {
@@ -50,7 +53,23 @@ class MonthView extends React.Component {
   renderGridCell = (date) => {
     const key = date.toString();
 
-    return <DateCell key={key} date={date} month={this.props.month} />;
+    let dayEvents = this.props.events ?
+      this.props.events.filter((event) => {
+        var momentDate = date.format('YYYY MM DD');
+        var momentEvent = moment(event.startDate).format('YYYY MM DD');
+        return momentDate === momentEvent;
+      })
+      : [];
+
+    return <DateCell key={key}
+                     date={date}
+                     month={this.props.month}
+                     events={dayEvents}
+                     onTogglePanel={this.props.onTogglePanel}
+                     panelOpen={this.props.panelOpen}
+                     onUpdatePanelEvent={this.props.onUpdatePanelEvent}
+                     fetchUsers={this.props.fetchUsers}
+    />;
   }
 
   getDates = () => {
@@ -77,6 +96,8 @@ class MonthView extends React.Component {
   getDate = () => {
     return moment(this.props.momentizedDate);
   }
+
+
 }
 
 export default connect()(MonthView);

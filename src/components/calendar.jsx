@@ -3,6 +3,7 @@ import moment from "moment";
 
 import MonthView from "./monthView";
 import Header from "./header";
+import EventDetails from "./eventDetails";
 
 import {
   calendarComponent,
@@ -14,11 +15,25 @@ import {
 
 const VIEW_MAPPING = {
   month: MonthView,
+  day: DayView,
 };
 
 export default class Calendar extends React.Component {
   render() {
-    const { resolution, year, month, day, panelOpen, onTogglePanel } = this.props;
+    const {
+      resolution,
+      year,
+      month,
+      day,
+      panelOpen,
+      onTogglePanel,
+      onFetchEvents,
+      events,
+      panelEvent,
+      onUpdatePanelEvent,
+      onFetchUsers,
+      panelUsers,
+    } = this.props;
 
     const ViewComponent = VIEW_MAPPING[resolution] || MonthView;
 
@@ -43,9 +58,20 @@ export default class Calendar extends React.Component {
               month={month}
               day={day}
               momentizedDate={this.getMomentizedDate()}
+              fetchEvents={onFetchEvents}
+              onTogglePanel={onTogglePanel}
+              onUpdatePanelEvent={onUpdatePanelEvent}
+              panelOpen={panelOpen}
+              events={events}
+              fetchUsers={onFetchUsers}
             />
           </div>
-          {panelOpen && <div className={sidePanelWrapper} />}
+          {
+            panelOpen &&
+            <div className={sidePanelWrapper}>
+              <EventDetails panelEvent={panelEvent} panelUsers={panelUsers}/>
+            </div>
+          }
         </div>
       </div>
     );

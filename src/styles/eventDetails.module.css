@@ -1,0 +1,24 @@
+.detail {
+    margin: 20px;
+}
+
+.detailTitle {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.detailDate {
+    color: #4A4A4A;
+    font-size: 13px;
+    margin-top: 10px;
+}
+
+.detailDescription {
+    margin: 10px 0px 10px 0px;
+    font-size: 14px;
+}
+
+.detailUsers {
+    font-size: 14px;
+    text-decoration: underline;
+}

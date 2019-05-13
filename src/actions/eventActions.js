@@ -16,7 +16,7 @@ export const fetchEventsFailure = error => ({
   payload: { error }
 });
 
-export default function fetchEvents() {
+export const fetchEvents = () => {
   return dispatch => {
     dispatch(fetchEventsBegin());
     return fetch('http://localhost:3001/events')

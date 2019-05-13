@@ -1,37 +1,37 @@
 import {
-  FETCH_EVENTS_BEGIN,
-  FETCH_EVENTS_SUCCESS,
-  FETCH_EVENTS_FAILURE
-} from '../actions/eventActions';
+  FETCH_USERS_BEGIN,
+  FETCH_USERS_SUCCESS,
+  FETCH_USERS_FAILURE
+} from '../actions/userActions';
 
 const initialState = {
-  events: [],
+  panelUsers: [],
   loading: false,
   error: null
 };
 
-export default function eventReducer(state = initialState, action) {
+export default function userReducer(state = initialState, action) {
   switch(action.type) {
-    case FETCH_EVENTS_BEGIN:
+    case FETCH_USERS_BEGIN:
       return {
         ...state,
         loading: true,
         error: null
       };
 
-    case FETCH_EVENTS_SUCCESS:
+    case FETCH_USERS_SUCCESS:
       return {
         ...state,
         loading: false,
-        events: action.payload.events
+        panelUsers: action.payload.users,
       };
 
-    case FETCH_EVENTS_FAILURE:
+    case FETCH_USERS_FAILURE:
       return {
         ...state,
         loading: false,
         error: action.payload.error,
-        events: []
+        panelUsers: []
       };
 
     default:

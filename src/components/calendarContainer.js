@@ -5,7 +5,9 @@ import applyHOCs from "../helpers/applyHOCs";
 import withProps from "../hocs/withProps";
 import withRedirect from "../hocs/withRedirect";
 
-import { togglePanel } from "../actions/uiActions";
+import { togglePanel, updatePanelEvent } from "../actions/uiActions";
+import { fetchEvents } from "../actions/eventActions";
+import { fetchUsers } from "../actions/userActions";
 
 import Calendar from "./calendar";
 
@@ -37,12 +39,18 @@ function isInvalidDate(props) {
 function mapStateToProps(state) {
   return {
     panelOpen: state.ui.panelOpen,
+    events: state.events.events,
+    panelEvent: state.ui.panelEvent,
+    panelUsers: state.users.panelUsers,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     onTogglePanel: () => dispatch(togglePanel()),
+    onFetchEvents: () => dispatch(fetchEvents()),
+    onUpdatePanelEvent: (calendarEvent) => dispatch(updatePanelEvent(calendarEvent)),
+    onFetchUsers: (users) => dispatch(fetchUsers(users)),
   };
 }
 
