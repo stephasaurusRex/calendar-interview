@@ -23,7 +23,7 @@ class DayView extends React.Component {
 
   render() {
 
-    let todaysEvents = this.filterDates(this.props.events);
+    //let todaysEvents = this.filterDates(this.props.events);
 
     return (
       <div className={dayView}>
@@ -40,14 +40,14 @@ class DayView extends React.Component {
     );
   }
 
-  filterDates = (events) => {
-    let date = this.getDate();
-    return events.filter((event) => {
-        var momentDate = date.format('YYYY MM DD');
-        var momentEvent = moment(event.startDate).format('YYYY MM DD');
-        return momentDate === momentEvent;
-      });
-  }
+  // filterDates = (events) => {
+  //   let date = this.getDate();
+  //   return events.filter((event) => {
+  //       var momentDate = date.format('YYYY MM DD');
+  //       var momentEvent = moment(event.startDate).format('YYYY MM DD');
+  //       return momentDate === momentEvent;
+  //     });
+  // }
 
   // return copy of given date so we don't mutate
   getDate = () => {
