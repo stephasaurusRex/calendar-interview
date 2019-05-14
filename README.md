@@ -34,6 +34,10 @@ yarn server
 
 The server will start on port 3001.
 
+## Test
+To run the test suites for this application run
+```yarn test```
+
 ## Database
 The database will be seeded with two entities: events and users. Data can be fetched by sending a GET request to the appropriate endpoint (http://localhost:3001/events or http://localhost:3001/users). Events can be added by sending a POST request to the `events` endpoint. When the database is seeded, events are sorted by their start date.
 
