@@ -3,10 +3,10 @@ import { connect } from 'react-redux'
 import { number, object, func, array, bool } from "prop-types";
 import moment from "moment";
 
-import chunkArray from "../helpers/chunkArray";
+import chunkArray from "../../helpers/chunkArray";
 import DateCell from "./dateCell";
 
-import { monthViewComponent, monthViewHeader, gridWrapper, headerItem, weekRow } from "../styles/monthView.module.css";
+import { monthViewComponent, monthViewHeader, gridWrapper, headerItem, weekRow } from "../../styles/monthView.module.css";
 
 const DAYS_OF_WEEK = ["sun", "mon", "tues", "wed", "thurs", "fri", "sat"];
 

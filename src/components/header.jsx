@@ -5,7 +5,6 @@ import moment from "moment";
 import Icon from "./icon";
 
 import { headerComponent, changeDateButton, todayButton, panelToggleButton, monthTitle } from "../styles/header.module.css";
-import {updateResolution} from "../actions/uiActions";
 
 export default class Header extends React.Component {
   static propTypes = {
@@ -18,54 +17,26 @@ export default class Header extends React.Component {
   }
 
   render() {
-    switch (this.props.resolution) {
-      case "day":
-        return this.renderDayHeader();
-      case "month":
-      default:
-        return this.renderMonthHeader();
-    }
+    return this.renderHeader(this.props.resolution);
   }
 
-  renderMonthHeader = () => {
+  renderHeader = (resolution) => {
     return (
       <div className={headerComponent}>
         <div>
           <button className={todayButton} onClick={this.handleSetToday}>
             Today
           </button>
-          <button className={changeDateButton} onClick={this.handleChangeMonthCurry(-1)}>
+          <button className={changeDateButton}
+                  onClick={resolution === "month" ?
+                    this.handleChangeMonthCurry(-1) :
+                    this.handleChangeDayCurry(-1)}>
             <Icon name="angle-left" />
           </button>
-          <button className={changeDateButton} onClick={this.handleChangeMonthCurry(1)}>
-            <Icon name="angle-right" />
-          </button>
-          <button
-            className={monthTitle}
-            onClick={this.handleChangeMonthCurry(0)}
-          >
-            {this.props.momentizedDate.format("MMMM YYYY")}
-          </button>
-        </div>
-        <button className={panelToggleButton} onClick={this.props.onTogglePanel}>
-          {this.props.panelOpen && <Icon name="caret-square-right" solid={false} />}
-          {!this.props.panelOpen && <Icon name="caret-square-left" solid={false} />}
-        </button>
-      </div>
-    )
-  }
-
-  renderDayHeader = () => {
-    return (
-      <div className={headerComponent}>
-        <div>
-          <button className={todayButton} onClick={this.handleSetToday}>
-            Today
-          </button>
-          <button className={changeDateButton} onClick={this.handleChangeDayCurry(-1)}>
-            <Icon name="angle-left" />
-          </button>
-          <button className={changeDateButton} onClick={this.handleChangeDayCurry(1)}>
+          <button className={changeDateButton}
+                  onClick={resolution === "month" ?
+                    this.handleChangeMonthCurry(1) :
+                  this.handleChangeDayCurry(1)}>
             <Icon name="angle-right" />
           </button>
           <button
@@ -102,7 +73,46 @@ export default class Header extends React.Component {
   getDateParams = (change) => {
     switch (this.props.resolution) {
       case "day": {
-        return {day: change, month: this.props.month, year: this.props.year, resolution: 'day'};
+        const baseParams = {day: change, month: this.props.month, year: this.props.year, resolution: 'day'};
+
+        switch(change) {
+          case 31: {
+            if( [4,6,9,11].includes(this.props.month + 1) ) {
+              return {...baseParams, month: this.props.month + 1, day: 1};
+            }
+            break;
+          }
+          case 32: {
+            if( [1,3,5,7,8,10,12].includes(this.props.month + 1) ) {
+              return this.props.month === 11 ?
+                {...baseParams, day: 1, month: 0, year: this.props.year + 1} :
+                {...baseParams, month: this.props.month + 1, day: 1};
+            }
+            break;
+          }
+          case 29:{
+            if( [2].includes(this.props.month + 1) ) {
+              return {...baseParams, month: this.props.month + 1, day: 1};
+            }
+            break;
+          }
+          case 0: {
+             if( this.props.day === 1 ) {
+               if( [4,6,9,11].includes(this.props.month + 1) ) {
+                 return {...baseParams, month: this.props.month - 1, day: 31}
+               } else if ([1,3,5,7,8,10,12].includes(this.props.month + 1)) {
+                 return {...baseParams, month: this.props.month - 1, day: 30}
+               } else {
+                   return {...baseParams, month: this.props.month - 1, day: 28}
+               }
+             }
+
+             return {...baseParams, month: this.props.month, day: this.props.day - 1};
+          }
+          default:
+            return baseParams;
+        }
+        return baseParams;
       }
       case "month":
       default: {

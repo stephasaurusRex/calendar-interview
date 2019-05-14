@@ -1,0 +1,29 @@
+.dayView {
+}
+
+.dateTitle {
+    float: left;
+    width: 100vw;
+    height: 45px;
+    background-color: #efefef;
+    font-weight: bold;
+    font-size: 18px;
+    position: fixed;
+    padding-top: 20px;
+    padding-left: 20px;
+    z-index: 1;
+}
+
+.dayViewBody {
+    overflow-y: scroll;
+    position: relative;
+    top: 70px;
+    height: 80vh;
+}
+
+.hour {
+  height: 50px;
+  padding: 5px;
+}
+
+.hour:nth-child(even) {background-color: paleturquoise}

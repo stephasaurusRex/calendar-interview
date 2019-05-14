@@ -1,10 +1,10 @@
 import React from "react";
 import moment from "moment";
 
-import MonthView from "./monthView";
-import DayView from "./dayView";
+import MonthView from "./month/monthView";
+import DayView from "./day/dayView";
 import Header from "./header";
-import EventDetails from "./eventDetails";
+import EventDetails from "./sidebar/eventDetails";
 
 import {
   calendarComponent,

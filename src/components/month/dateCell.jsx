@@ -2,7 +2,7 @@ import React from "react";
 import classNames from "classnames";
 import moment from "moment";
 
-import { gridCellComponent, thisMonthCell, dateBubble, todayBubble, dateTitle } from "../styles/dateCell.module.css";
+import { gridCellComponent, thisMonthCell, dateBubble, todayBubble, dateTitle } from "../../styles/dateCell.module.css";
 
 export default function DateCell({ date, month, events, onTogglePanel, panelOpen, onUpdatePanelEvent, fetchUsers, onChangeDate, onUpdateResolution }) {
   const isThisMonth = month === date.month();

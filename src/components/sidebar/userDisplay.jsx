@@ -1,6 +1,6 @@
 import React from "react";
 
-import { userDiv, userName, userAvatar } from "../styles/user.module.css";
+import { userDiv, userName, userAvatar } from "../../styles/user.module.css";
 
 export default function UserDisplay({ user }) {
   return (
