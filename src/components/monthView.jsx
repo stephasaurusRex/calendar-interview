@@ -21,6 +21,8 @@ class MonthView extends React.Component {
     panelOpen: bool.isRequired,
     onUpdatePanelEvent: func.isRequired,
     fetchUsers: func.isRequired,
+    onChangeDate: func.isRequired,
+    onUpdateResolution: func.isRequired,
   };
 
   componentDidMount() {
@@ -69,6 +71,8 @@ class MonthView extends React.Component {
                      panelOpen={this.props.panelOpen}
                      onUpdatePanelEvent={this.props.onUpdatePanelEvent}
                      fetchUsers={this.props.fetchUsers}
+                     onChangeDate={this.props.onChangeDate}
+                     onUpdateResolution={this.props.onUpdateResolution}
     />;
   }
 

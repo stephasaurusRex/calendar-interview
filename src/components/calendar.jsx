@@ -2,6 +2,7 @@ import React from "react";
 import moment from "moment";
 
 import MonthView from "./monthView";
+import DayView from "./dayView";
 import Header from "./header";
 import EventDetails from "./eventDetails";
 
@@ -19,6 +20,20 @@ const VIEW_MAPPING = {
 };
 
 export default class Calendar extends React.Component {
+  componentDidUpdate(prevProps) {
+    if (this.props.resolution !== prevProps.resolution) {
+      this.handleChangeDate({
+        day: this.props.day,
+        month: this.props.month,
+        year: this.props.year,
+        resolution: this.props.resolution
+      });
+      if(this.props.panelOpen) {
+        this.props.onTogglePanel();
+      }
+    }
+  }
+
   render() {
     const {
       resolution,
@@ -33,6 +48,7 @@ export default class Calendar extends React.Component {
       onUpdatePanelEvent,
       onFetchUsers,
       panelUsers,
+      onUpdateResolution,
     } = this.props;
 
     const ViewComponent = VIEW_MAPPING[resolution] || MonthView;
@@ -49,6 +65,7 @@ export default class Calendar extends React.Component {
             onTogglePanel={onTogglePanel}
             panelOpen={panelOpen}
             resolution={resolution}
+            onUpdateResolution={onUpdateResolution}
           />
         </div>
         <div className={bodyWrapper}>
@@ -64,6 +81,8 @@ export default class Calendar extends React.Component {
               panelOpen={panelOpen}
               events={events}
               fetchUsers={onFetchUsers}
+              onChangeDate={this.handleChangeDate}
+              onUpdateResolution={onUpdateResolution}
             />
           </div>
           {

@@ -5,7 +5,7 @@ import applyHOCs from "../helpers/applyHOCs";
 import withProps from "../hocs/withProps";
 import withRedirect from "../hocs/withRedirect";
 
-import { togglePanel, updatePanelEvent } from "../actions/uiActions";
+import { togglePanel, updatePanelEvent, updateResolution } from "../actions/uiActions";
 import { fetchEvents } from "../actions/eventActions";
 import { fetchUsers } from "../actions/userActions";
 
@@ -42,6 +42,7 @@ function mapStateToProps(state) {
     events: state.events.events,
     panelEvent: state.ui.panelEvent,
     panelUsers: state.users.panelUsers,
+    resolution: state.ui.resolution,
   };
 }
 
@@ -51,6 +52,7 @@ function mapDispatchToProps(dispatch) {
     onFetchEvents: () => dispatch(fetchEvents()),
     onUpdatePanelEvent: (calendarEvent) => dispatch(updatePanelEvent(calendarEvent)),
     onFetchUsers: (users) => dispatch(fetchUsers(users)),
+    onUpdateResolution: (resolution) => dispatch(updateResolution(resolution))
   };
 }
 
