@@ -1,9 +1,10 @@
-import { TOGGLE_PANEL, UPDATE_PANEL_EVENT, UPDATE_RESOLUTION } from "../actions/uiActions";
+import { TOGGLE_PANEL, UPDATE_PANEL_EVENT, UPDATE_RESOLUTION, HOUR_CLICK } from "../actions/uiActions";
 
 const INITIAL_STATE = {
   panelOpen: false,
   panelEvent: {},
   resolution: 'month',
+  eventCreateHour: 0,
 };
 
 export default function uiReducer(state = INITIAL_STATE, action = {}) {
@@ -22,6 +23,12 @@ export default function uiReducer(state = INITIAL_STATE, action = {}) {
       return {
         ...state,
         resolution: action.resolution,
+      }
+    case HOUR_CLICK:
+      return {
+        ...state,
+        panelOpen: true,
+        eventCreateHour: action.hour,
       }
     default:
       return state;

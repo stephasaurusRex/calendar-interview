@@ -32,7 +32,18 @@ class DayView extends React.Component {
           { HOURS_OF_DAY.map(
             (hour, index) => {
               let hourString = index < 12 || index === 24 ? `${hour}:00am` : `${hour}:00pm`;
-              return <HourCell key={hourString + index} hourString={hourString}/>
+              let hourEvents = [];
+              todaysEvents.forEach((event) => {
+                if(hourString === moment(event.startDate).format(`h:00a`)) {
+                  hourEvents.push(event);
+                }
+              })
+              return <HourCell
+                key={hourString + index}
+                hourString={hourString}
+                hourEvents={hourEvents}
+                date={this.getDate()}
+              />
             }
           ) }
         </div>

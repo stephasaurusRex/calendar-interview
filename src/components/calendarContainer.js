@@ -22,8 +22,8 @@ function getRouteParams(props) {
   };
 }
 
-function buildUrl() {
-  const resolution = "month";
+function buildUrl(props) {
+  const {resolution} = props;
   const [year, monthIndex, day] = moment().toArray();
 
   return `/${resolution}/${year}/${monthIndex + 1}/${day}`;

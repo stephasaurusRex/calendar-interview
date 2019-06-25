@@ -6,6 +6,10 @@ import Icon from "./icon";
 
 import { headerComponent, changeDateButton, todayButton, panelToggleButton, monthTitle } from "../styles/header.module.css";
 
+const MONTHS_WITH_THIRTY_DAYS = [4, 6, 9, 11]; //April, June, September, November
+const MONTHS_WITH_THIRTY_ONE_DAYS = [1, 3, 5, 7, 8, 12]; //Jan, March, May, July, Aug, Dec
+const FEBRUARY = [2];
+
 export default class Header extends React.Component {
   static propTypes = {
     month: number.isRequired,
@@ -70,43 +74,60 @@ export default class Header extends React.Component {
     };
   }
 
+  nextMonth = (baseParams, month) => {
+    return {...baseParams, month: this.props.month, day: 1};
+  }
+
+  nextYear = (baseParams, year) => {
+    return {...baseParams, day: 1, month: 0, year: year};
+  }
+
+  lastMonth = (baseParams, month, day) => {
+    return {...baseParams, month: month, day: day};
+  }
+
+  lastYear = (baseParams, year) => {
+    return {...baseParams, month: 11, year: year, day: 31};
+  }
+
   getDateParams = (change) => {
     switch (this.props.resolution) {
       case "day": {
-        const baseParams = {day: change, month: this.props.month, year: this.props.year, resolution: 'day'};
+        const baseParams = {day: change, month: this.props.month, year: this.props.year, resolution: this.props.resolution};
 
         switch(change) {
           case 31: {
-            if( [4,6,9,11].includes(this.props.month + 1) ) {
-              return {...baseParams, month: this.props.month + 1, day: 1};
+            if( MONTHS_WITH_THIRTY_DAYS.includes(this.props.month + 1) ) {
+              return this.nextMonth(baseParams, this.props.month + 1);
             }
             break;
           }
           case 32: {
-            if( [1,3,5,7,8,10,12].includes(this.props.month + 1) ) {
+            if( MONTHS_WITH_THIRTY_ONE_DAYS.includes(this.props.month + 1) ) {
               return this.props.month === 11 ?
-                {...baseParams, day: 1, month: 0, year: this.props.year + 1} :
-                {...baseParams, month: this.props.month + 1, day: 1};
+                 this.nextYear(baseParams, this.props.year + 1) :
+                 this.nextMonth(baseParams, this.props.month + 1);
             }
             break;
           }
           case 29:{
-            if( [2].includes(this.props.month + 1) ) {
-              return {...baseParams, month: this.props.month + 1, day: 1};
+            if( FEBRUARY.includes(this.props.month + 1) ) {
+              return this.nextMonth(baseParams, this.props.month + 1);
             }
             break;
           }
           case 0: {
              if( this.props.day === 1 ) {
-               if( [4,6,9,11].includes(this.props.month + 1) ) {
-                 return {...baseParams, month: this.props.month - 1, day: 31}
-               } else if ([1,3,5,7,8,10,12].includes(this.props.month + 1)) {
-                 return {...baseParams, month: this.props.month - 1, day: 30}
+               if( this.props.month === 0 ) {
+                 return this.lastYear(baseParams, this.props.year - 1);
+               } else if( MONTHS_WITH_THIRTY_DAYS.includes(this.props.month + 1) ) {
+                 return this.lastMonth(baseParams, this.props.month - 1, 31);
+               } else if (MONTHS_WITH_THIRTY_ONE_DAYS.includes(this.props.month + 1)) {
+                 return this.lastMonth(baseParams, this.props.month - 1, 30);
                } else {
-                   return {...baseParams, month: this.props.month - 1, day: 28}
+                 return this.lastMonth(baseParams, this.props.month - 1, 28);
                }
              }
-
              return {...baseParams, month: this.props.month, day: this.props.day - 1};
           }
           default:
@@ -120,9 +141,9 @@ export default class Header extends React.Component {
 
         switch (change) {
           case 12:
-            return {...baseParams, month: 0, year: this.props.year + 1};
+            return this.nextYear(baseParams, this.props.year + 1);
           case -1:
-            return {...baseParams, month: 11, year: this.props.year - 1};
+            return this.lastYear(baseParams, this.props.year - 1);
           default:
             return baseParams;
         }

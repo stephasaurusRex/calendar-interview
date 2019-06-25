@@ -101,7 +101,6 @@ class MonthView extends React.Component {
     return moment(this.props.momentizedDate);
   }
 
-
 }
 
 export default connect()(MonthView);
