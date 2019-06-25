@@ -3,11 +3,11 @@
 This is a simple React app that renders a custom calendar. Currently, it supports only a month view with the ability to switch between months and jump to today's date. We want to be able view and add events to the calendar. Additionally, we want to be able to view a single day and its events.
 
 Your job is to implement as many of the following features as you can:
-1) Fork the repository
-2) Fetch events and display on the appropriate day of Month View of the calendar.
-3) Implement a Day View.
-4) Display events in Day View.
-5) Add the ability to create new events.
+1) Fork the repository - completed
+2) Fetch events and display on the appropriate day of Month View of the calendar. - completed
+3) Implement a Day View. - partial
+4) Display events in Day View. - not completed
+5) Add the ability to create new events. - not completed
 6) Send your fork to the hiring manager who sent you this interview
 
 We are looking for clean, well structured, tested code & commits. Show us your best work. Quality over quantity. We recommend spending between 2 and 3 hours on this.
@@ -27,8 +27,16 @@ Then run the server in a separate tab:
 ```
 yarn json-server --watch db/db.json --port 3001
 ```
+or
+```
+yarn server
+```
 
 The server will start on port 3001.
+
+## Test
+To run the test suites for this application run
+```yarn test```
 
 ## Database
 The database will be seeded with two entities: events and users. Data can be fetched by sending a GET request to the appropriate endpoint (http://localhost:3001/events or http://localhost:3001/users). Events can be added by sending a POST request to the `events` endpoint. When the database is seeded, events are sorted by their start date.

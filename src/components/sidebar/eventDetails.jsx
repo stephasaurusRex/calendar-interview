@@ -23,11 +23,11 @@ export default function EventDetails({ panelEvent, panelUsers }) {
         </div>)
         : null
       }
-      { panelUsers ?
+      { panelUsers && panelUsers.length > 0 ?
         ( <>
           <div className={detailUsers}>Invitees:</div>
           { panelUsers.map((panelUser) => <UserDisplay key={panelUser.name} user={panelUser}/>) }
-          </> )   : null }
+          </> )   : <div className={detailUsers}>No Invitees</div> }
     </div>
   );
 }
